@@ -20,8 +20,8 @@ NOTE: on some distributions the installed middleware may not be readable in the
 installed directory (e.g. /usr/local/lib/python<version>/dist-packages) and
 you'll need to make sure it is world-readable.
 
-Git clone and install directly on proxy node
---------------------------------------------
+...OR ... Git clone and install directly on proxy node
+------------------------------------------------------
 
 on proxy node:
 
