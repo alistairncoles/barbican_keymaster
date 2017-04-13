@@ -1,0 +1,2 @@
+oslo.config>=3.22.0
+castellan>=0.6.0
