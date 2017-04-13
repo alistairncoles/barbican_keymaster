@@ -19,7 +19,7 @@ Upload the tarball to the server and install with:
 
 ```
 
-sudo pip install castellan
+sudo pip install castellan==0.6.0
 sudo pip install barbican_keymaster-0.0.1.tar.gz
 
 ```
@@ -38,6 +38,7 @@ on proxy node:
 git clone https://github.com/alistairncoles/barbican_keymaster
 cd barbican_keymaster
 sudo pip install -e .
+sudo pip install castellan==0.6.0
 
 ```
 
