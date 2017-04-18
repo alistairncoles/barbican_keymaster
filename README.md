@@ -19,8 +19,9 @@ Upload the tarball to the server and install with:
 
 ```
 
-sudo pip install castellan==0.6.0
-sudo pip install barbican_keymaster-0.0.1.tar.gz
+/opt/ss/bin/pip install castellan==0.6.0
+/opt/ss/bin/pip install requests==2.12.5
+/opt/ss/bin/pip install barbican_keymaster-0.0.1.tar.gz
 
 ```
 
@@ -37,10 +38,11 @@ on proxy node:
 
 git clone https://github.com/alistairncoles/barbican_keymaster
 cd barbican_keymaster
-sudo pip install -e .
-sudo pip install castellan==0.6.0
+/opt/ss/bin/pip install . -r requirements.txt
 
 ```
+
+NB the '.' in the pip install command.
 
 Swift config changes
 ---------------------
@@ -79,3 +81,9 @@ anc-barbican-setup.sh
 NB change the keystone host in auth_endpoint
 
 * restart swift proxy server
+sudo systemctl restart ssswift-proxy
+
+(or, if proxy restart fails, then to debug any errors on stdout:
+
+/opt/ss/bin/swift-proxy-server /etc/swift/proxy-server.conf
+)
