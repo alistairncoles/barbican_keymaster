@@ -21,7 +21,7 @@ from oslo_config import cfg
 
 from swift.common.middleware.crypto.keymaster import KeyMasterContext
 from swift.common.swob import Request, HTTPException
-from swift.common.utils import readconf
+from swift.common.utils import readconf, get_logger
 
 
 class BarbicanKeyMaster(object):
@@ -39,6 +39,7 @@ class BarbicanKeyMaster(object):
 
     def __init__(self, app, conf):
         self.app = app
+        self.logger = get_logger(conf, log_route='barbican_keymaster')
         self.keymaster_config_path = conf.get('keymaster_config_path')
         # The _get_root_secret() function is overridden by other keymasters
         self.root_secret = self._get_root_secret(conf)
@@ -59,6 +60,8 @@ class BarbicanKeyMaster(object):
                 raise ValueError('keymaster_config_path is set, but there '
                                  'are other config options specified!')
             conf = readconf(self.keymaster_config_path, 'kms_keymaster')
+        self.logger.info("Attempting to retrieve secret %s from %s" %
+                         (conf.get('key_id'), conf.get('auth_endpoint')))
         ctxt = keystone_password.KeystonePassword(
             username=conf.get('username'),
             password=conf.get('password'),
@@ -93,7 +96,10 @@ class BarbicanKeyMaster(object):
                              'KMS must be in RAW format and not e.g., as a '
                              'base64 encoded string (format of key with uuid '
                              '%s: %s)' % (conf.get('key_id'), key.format))
-        return key.get_encoded()
+        secret = key.get_encoded()
+        self.logger.info("Successfully retrieved secret %s from %s" %
+                         (conf.get('key_id'), conf.get('auth_endpoint')))
+        return secret
 
     def __call__(self, env, start_response):
         req = Request(env)
