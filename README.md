@@ -1,5 +1,15 @@
 OpenStack Swift middleware to fetch encryption root secret from Barbican service
 
+Common pre-requisites
+---------------------
+
+install:
+
+ git
+ pip
+ gcc
+ openssl-devel
+
 Build from source and copy .tar to proxy node
 ---------------------------------------------
 
